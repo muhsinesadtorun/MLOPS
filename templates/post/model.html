@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block body %}
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+                <div class="thumbnail">
+                    {% if post.image %}
+                        <img src="{{ Post.image.url }}" class="img-responsive" >
+                    {% endif %}
+                    <div class="caption">
+                        <h3><a href="{{ Post.get_absolute_url }}">{{ Post.img }}</a> <small>{{ Post.publishing_date }}</small></h3>
+                        <p>
+                            {% if post.image %}
+                            <img src="{{ post.image.url }}" class="img-responsive" >
+                            {% endif %}
+                        </p>
+                        <div style="text-align: center; font-size: 25px"><p>{{ answer|linebreaks}}</p> </div>
+                        <a href="{{ post.get_index_url }}" class="btn btn-default" role="button">Back</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

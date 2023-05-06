@@ -1,0 +1,185 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+    Anasayfa - {{ block.super }}
+{% endblock %}
+
+{% block body %}
+
+<!doctype html>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>MLOPS</title>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+    <style>
+        #logo{
+            position: relative;
+        }
+
+        * {
+            max-width: 100%;
+        }
+        .fab {
+            padding: 8px;
+            font-size: 30px;
+            width: 32px;
+            text-align: center;
+            text-decoration: none;
+            margin: 5px 2px;
+        }
+        .fa-linkedin {
+            background: #007bb5;
+            color: white;
+        }
+
+        .fa-github{
+            background: black;
+            color: white;
+        }
+        .icon-text{
+            width: 125px;
+            font-size: 16px;
+        }
+        
+        .icon-text span{
+            margin:4px;
+        }
+
+        .class-one{
+            position: relative;
+            width: 200px;
+            height: 200px;
+            background-color: #007bb5;
+            text-align: center; 
+        }
+
+        .class-right{
+            position: relative;
+            width: 200px;
+            height: 200px;
+            
+        }
+
+        .class-left{
+            right: 0;
+            left: 200px;
+            margin: 50px;
+        }
+
+        .class-text{
+            position: relative;
+            padding-top: 4%;
+            text-align: center;
+            width: 200px;
+            height: 200px;
+        
+        }
+
+        .class-image{
+            position: relative;
+            width: 200px;
+            height: 200px;
+
+        }
+
+        .class-deneme{
+            left: 200px;
+            margin: 50px;
+        }
+
+        .center {
+            margin-left: auto;
+            margin-right: auto;
+        }
+ 
+    </style>
+</head>
+
+<body>
+<h1><p style="text-align: center">Machine Learning Operation</p></h1>
+<p style="text-align: center"><img id="logo" src="{% static 'images/logo.png' %}" alt="MLOPS logo"/></p>
+
+<table class="center">
+    <tr>
+        <td>
+            <div class="class-right class-image "><img src="{% static 'images/muhsin.png' %}" width="200" height="200" alt="Muhsin Esad Torun"/></div>
+        </td>
+        <td>
+            <div></div>
+        </td>
+        <td>
+            <div class="class-left class-text">
+                <p>
+                    Muhsin Esad Torun
+                </p>
+                <p>
+                    200722131
+                </p>
+                <p>
+                    <a href="https://www.linkedin.com/in/muhsin-esad-torun-952655182/" class="icon-text fab fa-linkedin"><span> | </span> Linkedin </a>
+                </p>
+                <p>
+                    <a href="https://github.com/muhsinesadtorun" class="icon-text fab fa-github"><span> | </span> Github </a> 
+                </p>
+            </div>
+        </td>
+    </tr>
+</table>
+
+<table class="center">
+    <tr>
+        <td>
+            <div class="class-right class-text">
+                <p>
+                    Ege Kutlu
+                </p>
+                <p>
+                    180722007
+                </p>
+                <p>
+                    <a href="https://www.linkedin.com/in/kutluege/" class="icon-text fab fa-linkedin"><span> | </span> Linkedin </a> 
+                </p>
+                <p>
+                    <a href="https://github.com/kutluege" class="icon-text fab fa-github"><span> | </span> Github </a> 
+                </p>
+
+            </div>
+        </td>
+        <td>
+            <div class="class-left class-image"><img src="{% static 'images/ege.png' %}" width="200" height="200" alt="Ege Kutlu"/></div>
+        </td>
+    </tr>
+</table>
+
+<table class="center">
+    <tr>
+        <td>
+            <div class="class-right class-image"><img src="{% static 'images/hasan.png' %}" width="200" height="200" alt="Hasan Evin"/></div>
+        </td>
+        <td>
+            <div class="class-left class-text">
+                <p>
+                    Hasan Evin
+                </p>
+                <p>
+                    180722027
+                </p>
+                <p>
+                    <a href="https://www.linkedin.com/in/hasanevin/" class="icon-text fab fa-linkedin"><span> | </span> Linkedin </a> 
+                </p>
+                <p>
+                    <a href="https://github.com/hasanevinn" class="icon-text fab fa-github"><span> | </span> Github </a> 
+                </p>
+
+            </div>
+        </td>
+    </tr>
+</table>
+<p style="text-align: center"><img src="{% static 'images/qrcode.png' %}" alt="QR Code"/></p>
+</body>
+</html>
+
+{% endblock %}
+
