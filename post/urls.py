@@ -6,9 +6,9 @@ app_name = "post"
 urlpatterns = [
 
     path("index/", post_index, name="index"),
-    path("<id>/", post_detail, name='detail'),
+    path("<int:id>/", post_detail, name='detail'),
     path("create/", post_create, name='create'),
-    path("<id>/update/", post_update, name="update"),
-    path("<id>/delete/", post_delete, name='delete'),
-    path("<id>/predict/", post_predict, name='predict'),
+    path("<int:id>/update/", post_update, name="update"),
+    path("<int:id>/delete/", post_delete, name='delete'),
+    path("<int:id>/predict/", post_predict, name='predict'),
 ]

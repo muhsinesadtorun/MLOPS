@@ -1,13 +1,10 @@
-from django.shortcuts import render, HttpResponse, get_object_or_404, HttpResponseRedirect, redirect
+from django.shortcuts import render, HttpResponse, get_object_or_404, HttpResponseRedirect, redirect, Http404
 from .models import Post
 from .forms import PostForm
 from django.contrib import messages
-from pydantic.main import BaseModel
-
-#from keras.preprocessing import image
+#from pydantic.main import BaseModel
 import keras.utils as image
-
-import matplotlib.pyplot as plt
+#import matplotlib.pyplot as plt
 import numpy as np
 from joblib import load
 
@@ -26,18 +23,18 @@ def post_detail(request, id):
     return render(request, "post/detail.html", context)
 
 def post_create(request):
-    '''
-    form = PostForm()
-    context = {
-        'form': form,
-    }
-    return render(request, "post/form.html", context)
-    '''
+
+    #if not request.user.is_authenticated():
+        # Send error page if user is not logged in
+        #return Http404()
+    
     form = PostForm(request.POST or None, request.FILES or None)
     if form.is_valid():
-        post = form.save()
-        messages.success(request, "Başarili bir şekilde oluşturdunuz.", extra_tags='mesaj-basarili')
-        return redirect(post.get_absolute_url())
+        post = form.save(commit=False)
+        post.user = request.user
+        post.save()
+        messages.success(request, "The creation process has been successfully completed.", extra_tags='message-success')
+        return HttpResponseRedirect(post.get_absolute_url())
     
     context = {
         'form': form
@@ -47,12 +44,17 @@ def post_create(request):
     
 
 def post_update(request, id):
+
+    #if not request.user.is_authenticated():
+        # Send error page if user is not logged in
+        #return Http404()
+        
     post = get_object_or_404(Post, id=id)
     form = PostForm(request.POST or None, request.FILES or None, instance=post)
     if form.is_valid():
         form.save()
-        messages.success(request, "Başarili bir şekilde güncellediniz.")
-        return redirect(post.get_absolute_url()) #HttpResponseRedirect()
+        messages.success(request, "The update process has been successfully executed.")
+        return HttpResponseRedirect(post.get_absolute_url()) #HttpResponseRedirect()
 
     context = {
         'form': form
@@ -62,6 +64,11 @@ def post_update(request, id):
 
 
 def post_delete(request, id):
+
+    if not request.user.is_authenticated():
+        # Send error page if user is not logged in
+        return Http404()   
+     
     post = get_object_or_404(Post, id=id)
     post.delete()
     return redirect("post:index")
@@ -81,45 +88,3 @@ def post_predict(request, id):
         'answer': answer,
     }
     return render(request, "post/model.html", context)
-    '''
-    post = get_object_or_404(Post, id=id)
-    img_path = post.image
-    #img_path = "den.jpeg"
-    img = image.load_img(img_path, target_size=(32, 32))
-    plt.imshow(img)
-    plt.show()
-    img_array = image.img_to_array(img)
-    img_batch = np.expand_dims(img_array, axis=0)
-    img_batch = img_batch/255
-    output = my_model.predict(img_batch)
-    classes[np.argmax(output)]
-    return render(request, "post/detail.html", context)
-    
-    img_array = image.img_to_array(img)
-    img_batch = np.expand_dims(img_array, axis=0)
-    img_batch = img_batch/255
-    output = my_model.predict(img_batch)
-    classes[np.argmax(output)]
-    return render(request, "post/detail.html")
-    '''
-
-
-
-    #return redirect("post:index")
-'''
-    form = PostForm()
-    context = {
-        'form': form,
-    }
-    my_model = joblib.load('static/model/mymodel')
-    img_path = "media/"
-    img = image.load_img(img_path, target_size=(32, 32))
-plt.imshow(img)
-plt.show()
-img_array = image.img_to_array(img)
-img_batch = np.expand_dims(img_array, axis=0)
-img_batch = img_batch/255
-çıktı = deneme.predict(img_batch)
-classes[np.argmax(çıktı)]
-    return str(my_model.predict(x))
-    '''

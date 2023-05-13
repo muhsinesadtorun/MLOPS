@@ -1,0 +1,9 @@
+python manage.py makemigrations,
+python manage.py migrate,
+py manage.py runserver 0.0.0.0:8000,
+docker rm -f $(docker ps -a -q),
+docker image build -t test00 .,
+docker run --publish 8000:8000 test00,
+docker build --tag mlops,
+docker run --publish 8000:8000 mlops
+

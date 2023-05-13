@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block body %}
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+                <h1>{{ title }}</h1>
+                <form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div style="text-align: left; font-size: 15px; text-transform:capitalize "><p> {{ form.as_p }}</p> </div>
+                    <div class="Button" Style ="float: left; margin-left: 0px;">
+                        <input class="btn btn-primary" type="submit" value="{{ title }}">
+                    </div>
+                    <div class="Button" Style ="float: left; margin-left: 135px;">
+                        {% if title == 'Login' %}
+                            <lu><a class="btn btn-primary" href="{% url 'accounts:register' %}">Sign Up</a></lu>
+                        {% endif %}
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

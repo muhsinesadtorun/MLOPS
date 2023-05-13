@@ -42,8 +42,8 @@ INSTALLED_APPS = [
     # Kendi Uygulamarım
     'post',
     # 3. Parti Uygulamalar
-    'crispy_forms',
-    'django_cleanup',
+    #'crispy_forms',
+    #'django_cleanup',
 ]
 
 MIDDLEWARE = [
@@ -113,7 +113,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/1.10/topics/i18n/
 
-LANGUAGE_CODE = 'tr'
+LANGUAGE_CODE = 'en'
 
 TIME_ZONE = 'Europe/Istanbul'
 
@@ -142,7 +142,7 @@ MEDIA_ROOT = Path.joinpath(BASE_DIR, 'media/')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.fields.AutoField' #'django.db.models.BigAutoField'
 
-CRISPY_TEMPLATE_PACK = 'bootstrap4'
+CRISPY_TEMPLATE_PACK = 'bootstrap3'
 
 
 

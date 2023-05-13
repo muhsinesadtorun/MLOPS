@@ -1,11 +1,17 @@
 from typing import Any
+from django.conf import settings
 from django.db import models
 from django.urls import reverse
 
 
 class Post(models.Model):
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name='posts'
+    )
     title = models.CharField(max_length=120, verbose_name="Title")
-    content = models.TextField(verbose_name="Contents")
+    content = models.TextField(max_length=120, verbose_name="Content")
     publishing_date = models.DateTimeField(verbose_name="Release Date", auto_now_add=True)
     image = models.ImageField(null=True, blank=True)
 
