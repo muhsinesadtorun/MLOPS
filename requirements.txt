@@ -5,6 +5,3 @@ sqlparse
 python-multipart
 fastapi
 joblib
-matplotlib
-numpy
-tensorflow.keras
