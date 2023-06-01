@@ -2,13 +2,25 @@ from django.shortcuts import render, HttpResponse, get_object_or_404, HttpRespon
 from .models import Post
 from .forms import PostForm
 from django.contrib import messages
-#from pydantic.main import BaseModel
+from tensorflow import keras
+from keras import datasets, layers, models
+######################from pydantic.main import BaseModel
 import keras.utils as image
-#import matplotlib.pyplot as plt
+######################import matplotlib.pyplot as plt
 import numpy as np
 from joblib import load
+from .metrics import *
+from sklearn.metrics import classification_report
 
-my_model = load('./models/mlopsModel.joblib')
+my_model = load('./models/cnn_model.joblib')
+(X_train, y_train), (X_test, y_test) = datasets.cifar10.load_data()
+y_train = y_train.reshape(-1,)
+y_train[:5]
+X_train = X_train / 255
+X_test = X_test /255
+y_pred = my_model.predict(X_test)
+y_test = y_test.reshape(-1,)
+y_pred_classes = [np.argmax(element) for element in y_pred]
 
 def post_index(request):
     posts = Post.objects.all()
@@ -65,13 +77,38 @@ def post_update(request, id):
 
 def post_delete(request, id):
 
-    if not request.user.is_authenticated():
+    #if not request.user.is_authenticated():
         # Send error page if user is not logged in
-        return Http404()   
+        #return Http404()   
      
     post = get_object_or_404(Post, id=id)
     post.delete()
     return redirect("post:index")
+
+
+def get_classification_metrics(y_true, y_pred):
+    report = classification_report(y_true, y_pred)
+    lines = report.split('\n')[2:-3]  # Exclude headers and averages
+
+    precision_array = []
+    recall_array = []
+    f1_score_array = []
+    for line in lines:
+        values = line.strip().split()
+        if values == []:
+            break
+        
+        else:
+            precision, recall, f1_score, support = map(float, values[1:])
+            f1_score_array.append(f1_score)
+            precision_array.append(precision)
+            recall_array.append(recall)
+    
+    avg_f1_score = sum(f1_score_array) / len(f1_score_array)
+    avg_precision = sum(precision_array) / len(precision_array)
+    avg_recall = sum(recall_array) / len(recall_array)
+
+    return avg_f1_score, avg_precision, avg_recall
 
 def post_predict(request, id):
     post = get_object_or_404(Post, id=id)
@@ -87,4 +124,14 @@ def post_predict(request, id):
         'post': post,
         'answer': answer,
     }
+    avg_f1, avg_precision, avg_recall = get_classification_metrics(y_test, y_pred_classes)
+    print("Deneme\n")
+    print(avg_f1)
+    my_metric.inc()
+    test_loss, test_accuracy = my_model.evaluate(X_test, y_test)
+    global_accuracy.set(test_accuracy)
+    global_loss.set(test_loss)
+    global_precision.set(avg_precision)
+    global_recall.set(avg_recall)
+    global_f1_score.set(avg_f1)
     return render(request, "post/model.html", context)

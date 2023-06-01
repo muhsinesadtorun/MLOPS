@@ -7,3 +7,6 @@ docker run --publish 8000:8000 test00,
 docker build --tag mlops,
 docker run --publish 8000:8000 mlops
 
+
+
+#path("<int:id>/predict/", post_predict, name='predict'),

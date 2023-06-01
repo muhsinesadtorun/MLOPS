@@ -1,15 +1,15 @@
-FROM python:3.8 
+FROM python:3.8
 
-WORKDIR /usr/local/src/app
-
-RUN apt-get update && apt-get install -y python3-pip
-
-RUN pip3 install tensorflow
-RUN pip3 install keras
+WORKDIR /app
+RUN pip install --upgrade pip
+RUN pip install tensorflow
+RUN pip install keras
+RUN pip install joblib
+RUN pip install numpy
+RUN pip install keras-utils
 
 COPY requirements.txt requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
-RUN python -m pip install Pillow
-COPY . .
 
-CMD ["python3", "manage.py", "runserver", "0.0.0.0:8000"]
+COPY . .
+CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]

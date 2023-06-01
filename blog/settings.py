@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/1.10/ref/settings/
 """
 
 from pathlib import Path
-
+from os import getenv
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -22,12 +22,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = '79$g*#82qs_rl%3vmdand$g6#n%u9#w6c6$(-np%p@p3a2rhu!'
-
+#SECRET_KEY = getenv('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-
-ALLOWED_HOSTS = []
-
+#DEBUG = getenv("IS_DEVELOPMENT",True)
+ALLOWED_HOSTS = ['*']
+    #getenv('APP_HOST')
 
 # Application definition
 
@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     # 3. Parti Uygulamalar
     #'crispy_forms',
     #'django_cleanup',
+    
 ]
 
 MIDDLEWARE = [
@@ -55,6 +56,13 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+MIDDLEWARE = \
+    ['django_prometheus.middleware.PrometheusBeforeMiddleware'] + \
+    MIDDLEWARE + \
+    ['django_prometheus.middleware.PrometheusAfterMiddleware']
+
+INSTALLED_APPS += ['django_prometheus']
 
 ROOT_URLCONF = 'blog.urls'
 
@@ -131,7 +139,8 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     BASE_DIR / "static",
 ]
-#STATIC_ROOT = Path.joinpath(BASE_DIR, 'static/')
+
+STATIC_ROOT = BASE_DIR / "staticfiles"
 
 MEDIA_URL = '/media/'
 MEDIA_DIRS = [
@@ -139,10 +148,12 @@ MEDIA_DIRS = [
 ]
 MEDIA_ROOT = Path.joinpath(BASE_DIR, 'media/')
 
-
 DEFAULT_AUTO_FIELD = 'django.db.models.fields.AutoField' #'django.db.models.BigAutoField'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
+
+PROMETHEUS_EXPORT_MIGRATIONS = False
+
 
 
 

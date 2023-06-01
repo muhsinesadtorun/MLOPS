@@ -1,5 +1,5 @@
 from django.urls import path
-from post.views import *
+from .views import *
 
 app_name = "post"
 
@@ -11,4 +11,5 @@ urlpatterns = [
     path("<int:id>/update/", post_update, name="update"),
     path("<int:id>/delete/", post_delete, name='delete'),
     path("<int:id>/predict/", post_predict, name='predict'),
+    
 ]
