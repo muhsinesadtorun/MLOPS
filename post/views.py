@@ -12,7 +12,8 @@ from joblib import load
 from .metrics import *
 from sklearn.metrics import classification_report
 
-my_model = load('./models/cnn_model.joblib')
+my_model = load('static/models/cnn_model.joblib')
+
 (X_train, y_train), (X_test, y_test) = datasets.cifar10.load_data()
 y_train = y_train.reshape(-1,)
 y_train[:5]
@@ -125,8 +126,6 @@ def post_predict(request, id):
         'answer': answer,
     }
     avg_f1, avg_precision, avg_recall = get_classification_metrics(y_test, y_pred_classes)
-    print("Deneme\n")
-    print(avg_f1)
     my_metric.inc()
     test_loss, test_accuracy = my_model.evaluate(X_test, y_test)
     global_accuracy.set(test_accuracy)
@@ -134,4 +133,5 @@ def post_predict(request, id):
     global_precision.set(avg_precision)
     global_recall.set(avg_recall)
     global_f1_score.set(avg_f1)
+    
     return render(request, "post/model.html", context)

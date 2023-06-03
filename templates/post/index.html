@@ -21,7 +21,6 @@
                             {% else %}
                                 <h4>User: {{ post.user }}</h4>
                             {% endif %}
-                            <p>{{ post.image|linebreaks|truncatechars:150 }}</p>
                             <p>
                                 <a href="{{ post.get_absolute_url }}" class="btn btn-primary" role="button">Details</a>
                                 <a href="{{ post.get_model_url }}" class="btn btn-success" role="button">What's this?</a>
